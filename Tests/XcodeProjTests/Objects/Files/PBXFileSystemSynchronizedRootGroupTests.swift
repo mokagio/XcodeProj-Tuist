@@ -48,4 +48,18 @@ final class PBXFileSystemSynchronizedRootGroupTests: XCTestCase {
                                                          explicitFolders: [])
         XCTAssertEqual(subject, another)
     }
+
+    func test_isAlwaysSerializedOnASingleLine() {
+        let zeroExceptions = PBXFileSystemSynchronizedRootGroup(sourceTree: .group, path: "zero")
+        let oneException = PBXFileSystemSynchronizedRootGroup(sourceTree: .group, path: "one", exceptions: [exception])
+        let manyExceptions = PBXFileSystemSynchronizedRootGroup(
+            sourceTree: .group,
+            path: "many",
+            exceptions: [exception, PBXFileSystemSynchronizedBuildFileExceptionSet.fixture(target: target)]
+        )
+
+        XCTAssertFalse(zeroExceptions.multiline)
+        XCTAssertFalse(oneException.multiline)
+        XCTAssertFalse(manyExceptions.multiline)
+    }
 }
