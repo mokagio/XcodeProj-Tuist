@@ -100,6 +100,26 @@ final class XCBuildConfigurationTests: XCTestCase {
         XCTAssertNotNil(subject.baseConfigurationReferenceRelativePath)
     }
 
+    func test_isEqual_distinguishes_synchronized_anchor_fields() {
+        let groupA = PBXFileSystemSynchronizedRootGroup.fixture(sourceTree: .group, path: "config")
+        let groupB = PBXFileSystemSynchronizedRootGroup.fixture(sourceTree: .group, path: "other-config")
+        let baseline = XCBuildConfiguration(name: "Debug",
+                                            baseConfigurationAnchor: groupA,
+                                            baseConfigurationRelativePath: "Foo.xcconfig",
+                                            buildSettings: [:])
+        let differentAnchor = XCBuildConfiguration(name: "Debug",
+                                                   baseConfigurationAnchor: groupB,
+                                                   baseConfigurationRelativePath: "Foo.xcconfig",
+                                                   buildSettings: [:])
+        let differentRelativePath = XCBuildConfiguration(name: "Debug",
+                                                         baseConfigurationAnchor: groupA,
+                                                         baseConfigurationRelativePath: "Bar.xcconfig",
+                                                         buildSettings: [:])
+
+        XCTAssertFalse(baseline.isEqual(to: differentAnchor))
+        XCTAssertFalse(baseline.isEqual(to: differentRelativePath))
+    }
+
     func test_synchronizedAnchor_emits_groupName_as_comment_when_name_and_path_both_set() throws {
         // Synchronized root groups can carry both a name and a path
         // (e.g. wcios's `config` group has name = "config", path = "../config").
