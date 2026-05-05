@@ -13,9 +13,7 @@ public final class XCBuildConfiguration: PBXObject {
             baseConfigurationReference?.getObject()
         }
         set {
-            if let newValue {
-                baseConfigurationReference = newValue.reference
-            }
+            baseConfigurationReference = newValue?.reference
         }
     }
 
@@ -31,9 +29,7 @@ public final class XCBuildConfiguration: PBXObject {
             baseConfigurationReferenceAnchor?.getObject()
         }
         set {
-            if let newValue {
-                baseConfigurationReferenceAnchor = newValue.reference
-            }
+            baseConfigurationReferenceAnchor = newValue?.reference
         }
     }
 

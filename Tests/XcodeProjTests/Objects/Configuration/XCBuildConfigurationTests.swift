@@ -100,6 +100,31 @@ final class XCBuildConfigurationTests: XCTestCase {
         XCTAssertNotNil(subject.baseConfigurationReferenceRelativePath)
     }
 
+    func test_baseConfiguration_setter_clears_when_assigned_nil() {
+        let fileReference = PBXFileReference(sourceTree: .group, name: "Foo.xcconfig")
+        let subject = XCBuildConfiguration(name: "Debug",
+                                           baseConfiguration: fileReference,
+                                           buildSettings: [:])
+        XCTAssertNotNil(subject.baseConfigurationReference)
+
+        subject.baseConfiguration = nil
+
+        XCTAssertNil(subject.baseConfigurationReference)
+    }
+
+    func test_baseConfigurationAnchor_setter_clears_when_assigned_nil() {
+        let synchronizedGroup = PBXFileSystemSynchronizedRootGroup.fixture(sourceTree: .group, path: "config")
+        let subject = XCBuildConfiguration(name: "Debug",
+                                           baseConfigurationAnchor: synchronizedGroup,
+                                           baseConfigurationRelativePath: "Foo.xcconfig",
+                                           buildSettings: [:])
+        XCTAssertNotNil(subject.baseConfigurationReferenceAnchor)
+
+        subject.baseConfigurationAnchor = nil
+
+        XCTAssertNil(subject.baseConfigurationReferenceAnchor)
+    }
+
     func test_isEqual_distinguishes_synchronized_anchor_fields() {
         let groupA = PBXFileSystemSynchronizedRootGroup.fixture(sourceTree: .group, path: "config")
         let groupB = PBXFileSystemSynchronizedRootGroup.fixture(sourceTree: .group, path: "other-config")
