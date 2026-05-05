@@ -100,6 +100,34 @@ final class XCBuildConfigurationTests: XCTestCase {
         XCTAssertNotNil(subject.baseConfigurationReferenceRelativePath)
     }
 
+    func test_synchronizedAnchor_emits_groupName_as_comment_when_name_and_path_both_set() throws {
+        // Synchronized root groups can carry both a name and a path
+        // (e.g. wcios's `config` group has name = "config", path = "../config").
+        // Xcode emits the group's name as the anchor comment;
+        // PBXFileElement.fileName() returns name ?? path,
+        // matching that behavior for sibling baseConfigurationReference comments.
+        let synchronizedGroup = PBXFileSystemSynchronizedRootGroup.fixture(sourceTree: .group,
+                                                                           path: "../config",
+                                                                           name: "config",
+                                                                           explicitFileTypes: [:],
+                                                                           exceptions: [],
+                                                                           explicitFolders: [])
+        let subject = XCBuildConfiguration(name: "Debug",
+                                           baseConfigurationAnchor: synchronizedGroup,
+                                           baseConfigurationRelativePath: "WooCommerce.debug.xcconfig",
+                                           buildSettings: [:])
+
+        let proj = PBXProj()
+        let plist = try subject.plistKeyAndValue(proj: proj, reference: "ref")
+
+        guard case let .dictionary(dictionary) = plist.value,
+              case let .string(anchor) = dictionary["baseConfigurationReferenceAnchor"] else {
+            XCTFail("Expected baseConfigurationReferenceAnchor entry in encoded plist")
+            return
+        }
+        XCTAssertEqual(anchor.comment, "config")
+    }
+
     private func testDictionary() -> [String: Any] {
         [
             "baseConfigurationReference": "baseConfigurationReference",
