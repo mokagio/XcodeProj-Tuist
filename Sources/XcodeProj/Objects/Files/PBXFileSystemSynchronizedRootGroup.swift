@@ -21,7 +21,7 @@ public class PBXFileSystemSynchronizedRootGroup: PBXFileElement {
         }
     }
 
-    /// A list of relative paths to children folder whose configuration is overriden.
+    /// A list of relative paths to children folder whose configuration is overridden.
     public var explicitFolders: [String]?
 
     /// Initializes the file element with its properties.
@@ -37,7 +37,7 @@ public class PBXFileSystemSynchronizedRootGroup: PBXFileElement {
     ///   - wrapsLines: should the IDE wrap lines when editing the object?
     ///   - explicitFileTypes: It maps relative paths inside the synchronized root group to a particular file type.
     ///   - exceptions: It returns a list of exception objects that override the configuration for some children in the synchronized root group.
-    ///   - explicitFolders: A list of relative paths to children folder whose configuration is overriden.
+    ///   - explicitFolders: A list of relative paths to children folder whose configuration is overridden.
     public init(sourceTree: PBXSourceTree? = nil,
                 path: String? = nil,
                 name: String? = nil,
