@@ -18,7 +18,7 @@ public final class XCConfig {
     /// Initializes the XCConfig file with its attributes.
     ///
     /// - Parameters:
-    ///   - includes: all the .xcconfig file includes. The order determines how the values get overriden.
+    ///   - includes: all the .xcconfig file includes. The order determines how the values get overridden.
     ///   - dictionary: dictionary that contains the config.
     public init(includes: [XCConfigInclude], buildSettings: BuildSettings = [:]) {
         self.includes = includes
