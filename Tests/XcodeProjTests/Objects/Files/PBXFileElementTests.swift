@@ -142,7 +142,7 @@ final class PBXFileElementTests: XCTestCase {
         } else {
             XCTFail("""
             The implementation of PBXFileElement.plistKeyAndValue has changed,
-            which will break PBXReferenceProxy’s overriden implementation.
+            which will break PBXReferenceProxy’s overridden implementation.
             This must be fixed!
             """)
         }

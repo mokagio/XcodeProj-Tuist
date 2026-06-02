@@ -138,7 +138,7 @@ public class WorkspaceSettings: Codable, Equatable, Writable {
     /// Writes the workspace settings.
     ///
     /// - Parameter path: The path to write to
-    /// - Parameter override: True if the content should be overriden if it already exists.
+    /// - Parameter override: True if the content should be overridden if it already exists.
     /// - Throws: writing error if something goes wrong.
     public func write(path: Path, override: Bool) throws {
         guard let data = try dataRepresentation() else {

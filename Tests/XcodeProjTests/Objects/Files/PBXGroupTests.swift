@@ -117,7 +117,7 @@ final class PBXGroupTests: XCTestCase {
             project.add(object: group)
             let filePath = try Path.uniqueTemporary() + "file"
 
-            // ensure it doesnt exist
+            // ensure it doesn't exist
             let fileManager = FileManager.default
             if fileManager.fileExists(atPath: filePath.string) {
                 try FileManager.default.removeItem(atPath: filePath.string)
@@ -148,7 +148,7 @@ final class PBXGroupTests: XCTestCase {
 
         let filePath = try Path.uniqueTemporary() + "file"
 
-        // ensure it doesnt exist
+        // ensure it doesn't exist
         let fileManager = FileManager.default
         if fileManager.fileExists(atPath: filePath.string) {
             try FileManager.default.removeItem(atPath: filePath.string)
